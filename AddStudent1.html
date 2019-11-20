@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+	table, th, td {
+	  border: 1px solid black;
+	  border-collapse: collapse;
+	}
+	button{
+		height: 30px;
+		width: 100px;
+		background-color: yellow;
+		margin-left: 200px;
+	}
+	input{
+		width: 450px;
+		height: 40px;
+		margin-left: 20px;
+	}
+	h2{
+		text-align: center;
+	}
+	.container{
+		border: 1px solid black;
+		width: 500px
+
+	}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h2>Quản Lí Sinh Viên</h2>
+		<input type="text" name="name_student" id="name"><br><br>
+		<input type="number" name="Score_student" id="jsscore"><br><br>
+		<input type="text" name=AndriodS_student" id="androidscore"><br><br>
+		<input type="text" name="Class_student" id="class"><br><br>
+		<button onclick="AddStudent()">Add Student</button><br><br>
+	</div><br>
+	<table style="width:80%">
+	  <tr>
+	    <th>name</th>
+	    <th>jsScore</th> 
+	    <th>andoidscore</th>
+	    <th>Class</th>
+	    <th>Xep loai</th>
+	    <th>Diem TB</th>
+	    <th>Edit</th>
+	    <th>Delete</th>
+	  </tr>
+ 	  <tr id="displayStudent">
+ 	  	 <td id="Sname"></td>
+ 	  	 <td id="SjssScore"></td>
+ 	  	 <td id="Sandroidscore" ></td>
+ 	  	 <td id="Sclass" ></td>
+ 	  	 <td id="Sranked"></td>
+ 	  </tr>
+	</table>
+	<script type="text/javascript">	
+		function AddStudent() {
+			var nameStudent = document.getElementById('name').value;
+			var ScoreStudent = parseFloat(document.getElementById('jsscore').value);
+			var AndriodsroceStudent = parseFloat(document.getElementById('androidscore').value);
+			var ClassStudent = document.getElementById('class').value;
+			var TotalScore = (ScoreStudent + AndriodsroceStudent)/2; 
+			var Ranked = "";
+
+			if(nameStudent != "" && ScoreStudent != "" && AndriodsroceStudent!="" && ClassStudent=!""){
+				if (ScoreStudent < 0 || ScoreStudent > 10 || AndriodsroceStudent < 0 || AndriodsroceStudent > 10) {
+					alert("Please input valid data");
+				} else{
+					if ( TotalScore < 7) {
+						Ranked = "The student need tutoring";
+					}
+					if (TotalScore > 7) {
+						Ranked = "The student Normal";
+					}
+				}
+			}
+			localStorage.setItem('Name', nameStudent);
+			localStorage.setItem('Score', ScoreStudent);
+			localStorage.setItem('Andriodsroce',AndriodsroceStudent);
+			localStorage.setItem('Class',ClassStudent);
+			localStorage.setItem('Ranked',Ranked);
+
+			getData("Name", "Sname");
+			getData("Score", "SjssScore");
+			getData("Andriodsroce", "Sandroidscore");
+			getData("Class", "Sclass");
+			getData("Ranked", "Sranked");
+			}
+
+			function getData(value1, value2){
+				var x = document.createElement("TR");
+				var t = document.createTextNode(localStorage.getItem(value1));
+				   x.appendChild(t);
+				   document.getElementById(value2).appendChild(x);
+			}
+	</script>
+</body>
+</html>
